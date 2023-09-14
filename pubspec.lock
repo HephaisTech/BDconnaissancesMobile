@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  entry:
+    dependency: "direct main"
+    description:
+      name: entry
+      sha256: "32737546e2dd640e40d057b367d65c85bb8d36ed0a68709eedfe75aa003ff869"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   equatable:
     dependency: transitive
     description:
@@ -173,6 +181,11 @@ packages:
     version: "0.6.2"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -400,6 +413,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  simple_animations:
+    dependency: transitive
+    description:
+      name: simple_animations
+      sha256: "1ea7b93fb98e2a611b6865d632de55607b766328d14700143353129ee0559d3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   skeletons:
     dependency: "direct main"
     description:

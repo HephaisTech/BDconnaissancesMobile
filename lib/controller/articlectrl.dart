@@ -11,7 +11,7 @@ class ArticleController extends GetxController {
 
   void getArticleListe() async {
     debugPrint('ok');
-    var token = '3|OB2GAfIF1DON8dtE4FC2jfvOwkQqFcfYN4MzDgGE';
+    var token = '6|zzYnHxjrpy2HjBFeLEOrbu14PZ9Uw1OBa2qHM389';
     // App.getStorage.read('BDUSERKEY');
     final response = await http.get(
       Uri.parse('$baseUrl/articles'),
