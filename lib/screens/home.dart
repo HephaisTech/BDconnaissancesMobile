@@ -1,8 +1,9 @@
-// ignore_for_file:
+// ignore_for_file:, prefer_const_constructors
 import 'dart:math';
 
 import 'package:bdconnaissance/controller/articlectrl.dart';
 import 'package:bdconnaissance/models/article.dart';
+import 'package:bdconnaissance/screens/article_detail.dart';
 import 'package:bdconnaissance/utils/app.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entry/entry.dart';
@@ -363,7 +364,9 @@ class ArticleListview extends StatelessWidget {
               ],
             ),
             onTap: () {
-              print(article.title);
+              debugPrint(article.title);
+              Get.to(() => ArticleDetail(article),
+                  duration: Duration(seconds: 1));
             },
           ),
         );
