@@ -1,11 +1,9 @@
 // ignore_for_file:, prefer_const_constructors
-import 'dart:math';
 
 import 'package:bdconnaissance/controller/articlectrl.dart';
 import 'package:bdconnaissance/models/article.dart';
 import 'package:bdconnaissance/screens/article_detail.dart';
 import 'package:bdconnaissance/utils/app.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:nil/nil.dart';
 import 'package:ready/ready.dart';
-import 'package:skeletons/skeletons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,43 +59,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ScaleAnimation.y(),
                               FlipAnimation(FlipType.x),
                             ],
-                            child: CachedNetworkImage(
-                              imageUrl: '', // user profil
-                              placeholder: (context, url) => const CircleAvatar(
-                                backgroundColor: Colors.amber,
-                                radius: 100,
-                              ),
-                              imageBuilder: (context, image) => CircleAvatar(
-                                backgroundImage: image,
-                                radius: 100,
-                              ),
-                              errorWidget: (context, url, error) {
-                                return CircleAvatar(
-                                  radius: 100,
-                                  child: IconButton(
-                                      onPressed: () {
-                                        Get.showSnackbar(
-                                          GetSnackBar(
-                                            // message: 'No illustration'.tr,
-                                            messageText: Text(
-                                              'No illustration'.tr,
-                                              style: GoogleFonts.poppins(
-                                                color: App.backgroundColor,
-                                              ),
-                                            ),
-                                            icon: Icon(
-                                              Icons
-                                                  .image_not_supported_outlined,
-                                              color: App.backgroundColor,
-                                            ),
-                                            duration:
-                                                const Duration(seconds: 3),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(FontAwesomeIcons.image)),
-                                );
-                              },
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.amber,
+                              radius: 100,
                             ),
                           ),
                         ),
@@ -277,50 +239,6 @@ class ArticleListview extends StatelessWidget {
                 fontSize: 10,
               ),
             ),
-            leading: Animated(
-              fade: const FadeAnimation(),
-              transforms: const [
-                ScaleAnimation.y(),
-                FlipAnimation(FlipType.x),
-              ],
-              child: CachedNetworkImage(
-                imageUrl: article.withfile,
-                width: 50,
-                placeholder: (context, url) => const CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  radius: 100,
-                ),
-                imageBuilder: (context, image) => CircleAvatar(
-                  backgroundImage: image,
-                  radius: 100,
-                ),
-                errorWidget: (context, url, error) {
-                  return CircleAvatar(
-                    radius: 100,
-                    child: IconButton(
-                        onPressed: () {
-                          Get.showSnackbar(
-                            GetSnackBar(
-                              // message: 'No illustration'.tr,
-                              messageText: Text(
-                                'No illustration'.tr,
-                                style: GoogleFonts.poppins(
-                                  color: App.backgroundColor,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.image_not_supported_outlined,
-                                color: App.backgroundColor,
-                              ),
-                              duration: const Duration(seconds: 3),
-                            ),
-                          );
-                        },
-                        icon: Icon(FontAwesomeIcons.image)),
-                  );
-                },
-              ),
-            ),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -366,6 +284,7 @@ class ArticleListview extends StatelessWidget {
             onTap: () {
               debugPrint(article.title);
               Get.to(() => ArticleDetail(article),
+                  transition: Transition.cupertino,
                   duration: Duration(seconds: 1));
             },
           ),

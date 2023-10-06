@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-// var baseUrl = 'http://127.0.0.1:8050/api/v3';
-var baseUrl = 'http://192.168.101.183:8050/api/v3';
-var baseHost = 'http://192.168.101.183:8050/';
+var baseUrl = 'http://127.0.0.1:8050/api/v3';
+// var baseUrl = 'http://192.168.101.183:8050/api/v3';
+var token = '7|UBB18IqXOWz15yfupDwofiJ7Lt3PnX2dsqMcAeVx';
 
 class App extends GetxController {
   static String? lang = 'en';

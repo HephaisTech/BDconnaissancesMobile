@@ -1,16 +1,13 @@
-import 'package:bdconnaissance/controller/articlectrl.dart';
+// ignore_for_file: invalid_use_of_protected_member, prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:bdconnaissance/controller/commentCtrl.dart';
 import 'package:bdconnaissance/models/article.dart';
 import 'package:bdconnaissance/models/comment.dart';
-import 'package:bdconnaissance/utils/app.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nil/nil.dart';
-import 'package:ready/ready.dart';
 
 class ArticleDetail extends ConsumerStatefulWidget {
   const ArticleDetail(this.article, {super.key});
@@ -21,57 +18,84 @@ class ArticleDetail extends ConsumerStatefulWidget {
 }
 
 class _ArticleDetailState extends ConsumerState<ArticleDetail> {
-  final articleController = Get.put(ArticleController());
+  final commentaireController = Get.put(CommentCtrl());
+
+  @override
+  void initState() {
+    super.initState();
+    commentaireController.getArticleComments(widget.article.id);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    articleController.getArticleComments(widget.article.id);
-    return SafeArea(
-        child: Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Get.size * 0.20,
-          child: GestureDetector(
-            onPanUpdate: (details) {},
-            child: Card(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 100,
-                      child: Animated(
-                        fade: const FadeAnimation(),
-                        transforms: const [
-                          ScaleAnimation.y(),
-                          FlipAnimation(FlipType.x),
-                        ],
-                        child: nil,
+    return Obx(() {
+      return SafeArea(
+          child: Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Center(
+            child: Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: commentaireController.commentList.length,
+                  itemBuilder: (context, index) {
+                    Commentaire kcomment =
+                        commentaireController.commentList.value[index];
+                    return Card(
+                      child: ExpansionTile(
+                        subtitle: Text(kcomment.content),
+                        title: Text(
+                          kcomment.author.email,
+                          style:
+                              GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                        ),
+                        trailing: Column(
+                          children: [
+                            kcomment.withfile != ''
+                                ? IconButton(
+                                    onPressed: () {
+                                      Get.dialog(Card(), useSafeArea: true);
+                                    },
+                                    icon: Icon(
+                                      Icons.attach_file,
+                                    ))
+                                : Nil(),
+                          ],
+                        ),
+                        leading: const CircleAvatar(
+                          backgroundColor: Colors.amber,
+                          radius: 25,
+                        ),
+                        children: List.generate(
+                            commentaireController.commentList.length, (index) {
+                          Commentaire kchildcomment =
+                              commentaireController.commentList.value[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 25),
+                            child: Card(
+                              child: ListTile(
+                                title: Text(kchildcomment.content),
+                              ),
+                            ),
+                          );
+                        }),
                       ),
-                    ),
-                  ),
-                  Text(
-                    widget.article.title.tr,
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+                    );
+                  },
+                ),
+              ],
             ),
-          )),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Center(
-            child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: articleController.listArticleComment.length,
-          itemBuilder: (context, index) {
-            Commentaire commentaire =
-                articleController.listArticleComment.value[index];
-            return ListTile(
-              title: Text(commentaire.content),
-            );
-          },
-        )),
-      ),
-    ));
+          ),
+        ),
+      ));
+    });
   }
 }

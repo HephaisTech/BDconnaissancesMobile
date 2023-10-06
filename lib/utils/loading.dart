@@ -24,7 +24,7 @@ class _LoadingState extends State<Loading> {
     return Loader((_) async {
       App.changeLang(Get.locale.toString());
       App.readTheme();
-      if (await App.online()) {
+      if (!await App.online()) {
         Future.delayed(const Duration(seconds: 3),
             () => Get.offAll(() => const HomeScreen()));
       } else {

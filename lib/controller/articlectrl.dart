@@ -7,8 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-var token = '6|zzYnHxjrpy2HjBFeLEOrbu14PZ9Uw1OBa2qHM389';
-
 class ArticleController extends GetxController {
   var listArticles = [].obs;
   var listArticleComment = [].obs;
