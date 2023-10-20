@@ -9,6 +9,8 @@ class Commentaire {
   int upvotes;
   DateTime createdAt;
   DateTime updatedAt;
+  dynamic parentId;
+  List<dynamic>? replies;
   Author author;
 
   Commentaire({
@@ -20,6 +22,8 @@ class Commentaire {
     required this.upvotes,
     required this.createdAt,
     required this.updatedAt,
+    required this.parentId,
+    this.replies,
     required this.author,
   });
 
@@ -32,6 +36,8 @@ class Commentaire {
     int? upvotes,
     DateTime? createdAt,
     DateTime? updatedAt,
+    dynamic parentId,
+    List<dynamic>? replies,
     Author? author,
   }) =>
       Commentaire(
@@ -43,6 +49,8 @@ class Commentaire {
         upvotes: upvotes ?? this.upvotes,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        parentId: parentId ?? this.parentId,
+        replies: replies ?? this.replies,
         author: author ?? this.author,
       );
 
@@ -60,6 +68,10 @@ class Commentaire {
         upvotes: json["upvotes"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        parentId: json["parent_id"],
+        replies: json["replies"] == null
+            ? []
+            : List<dynamic>.from(json["replies"]!.map((x) => x)),
         author: Author.fromJson(json["author"]),
       );
 
@@ -72,6 +84,9 @@ class Commentaire {
         "upvotes": upvotes,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "parent_id": parentId,
+        "replies":
+            replies == null ? [] : List<dynamic>.from(replies!.map((x) => x)),
         "author": author.toJson(),
       };
 }

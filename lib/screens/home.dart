@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
-                                      setState(() {});
+                                      articleController.getArticleListe();
                                     },
                                     child: Text(
                                       'Reload'.tr,

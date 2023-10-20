@@ -30,6 +30,26 @@ class CommentCtrl extends GetxController {
     }
   }
 
+  Future<List<Commentaire>> getCommentResponses(int parentid) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/comments/responses/$parentid'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<dynamic> jsdata = jsonData['data'];
+      return jsdata.map((item) => Commentaire.fromJson(item)).toList();
+    } else {
+      debugPrint('${response.statusCode}');
+      return [];
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
