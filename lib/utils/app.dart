@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 // var baseUrl = 'http://192.168.101.183/api/v3';
 var baseUrl = 'http://192.168.101.183:8050/api/v3';
-var token = '3|3l3KFL8Kq7K8FPeIQjLrPTsTg9IKpUMw6QVYoPTT';
+var token = '2|MCArQUO7trzhRNhdfZUzAA3FbLvXG09OLiR36mHJ';
 
 class App extends GetxController {
   static String? lang = 'en';

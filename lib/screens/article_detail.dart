@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nil/nil.dart';
+// import 'package:bdconnaissance/m';
 
 class ArticleDetail extends ConsumerStatefulWidget {
   const ArticleDetail(this.article, {super.key});
@@ -28,6 +29,7 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
   void initState() {
     super.initState();
     commentaireController.getArticleComments(widget.article.id);
+    widget.article.steps.sort((a, b) => a.order.compareTo(b.order));
   }
 
   @override
@@ -41,14 +43,14 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
     return Obx(() {
       return SafeArea(
           child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           bottomSheet: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
               leading: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.emoji_emotions_outlined),
+                icon: Icon(Icons.attach_file),
               ),
               trailing: IconButton(
                 onPressed: () {},
@@ -82,6 +84,10 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
             bottom: TabBar(
               tabs: [
                 Tab(
+                  icon: Icon(Icons.run_circle_outlined),
+                  text: 'Steps'.tr,
+                ),
+                Tab(
                   icon: Icon(Icons.file_copy_outlined),
                   text: 'Détails'.tr,
                 ),
@@ -95,6 +101,20 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
             ),
           ),
           body: TabBarView(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Stepper(
+                steps: widget.article.steps.map((step) {
+                  return Step(
+                    title: Text(''),
+                    content: Text(step.description),
+                  );
+                }).toList(),
+                onStepContinue: () {},
+                onStepTapped: (value) {},
+                elevation: 10,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -122,6 +142,7 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
                         label: Text(
                           'Departement : ${widget.article.departement}',
                           maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -134,6 +155,7 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
                         label: Text(
                           'Project : ${widget.article.project}',
                           maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -172,6 +194,9 @@ class _ArticleDetailState extends ConsumerState<ArticleDetail> {
                           fontSize: 14,
                           fontStyle: FontStyle.italic),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),

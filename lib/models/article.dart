@@ -12,6 +12,7 @@ class Article {
   DateTime updatedAt;
   int commentCount;
   List<Tag> tags;
+  List<Stepvi> steps;
 
   Article({
     required this.id,
@@ -25,6 +26,7 @@ class Article {
     required this.updatedAt,
     required this.commentCount,
     required this.tags,
+    required this.steps,
   });
 
   Article copyWith({
@@ -39,6 +41,7 @@ class Article {
     DateTime? updatedAt,
     int? commentCount,
     List<Tag>? tags,
+    List<Stepvi>? steps,
   }) =>
       Article(
         id: id ?? this.id,
@@ -52,6 +55,7 @@ class Article {
         updatedAt: updatedAt ?? this.updatedAt,
         commentCount: commentCount ?? this.commentCount,
         tags: tags ?? this.tags,
+        steps: steps ?? this.steps,
       );
 
   factory Article.fromRawJson(String str) => Article.fromJson(json.decode(str));
@@ -70,6 +74,7 @@ class Article {
         updatedAt: DateTime.parse(json["updated_at"]),
         commentCount: json["comment_count"],
         tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+        steps: List<Stepvi>.from(json["steps"].map((x) => Stepvi.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,6 +89,70 @@ class Article {
         "updated_at": updatedAt.toIso8601String(),
         "comment_count": commentCount,
         "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
+        "steps": List<dynamic>.from(steps.map((x) => x.toJson())),
+      };
+}
+
+class Stepvi {
+  int id;
+  int articleId;
+  String description;
+  int order;
+  String attachedFile;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  Stepvi({
+    required this.id,
+    required this.articleId,
+    required this.description,
+    required this.order,
+    required this.attachedFile,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  Stepvi copyWith({
+    int? id,
+    int? articleId,
+    String? description,
+    int? order,
+    String? attachedFile,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) =>
+      Stepvi(
+        id: id ?? this.id,
+        articleId: articleId ?? this.articleId,
+        description: description ?? this.description,
+        order: order ?? this.order,
+        attachedFile: attachedFile ?? this.attachedFile,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+
+  factory Stepvi.fromRawJson(String str) => Stepvi.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Stepvi.fromJson(Map<String, dynamic> json) => Stepvi(
+        id: json["id"],
+        articleId: json["article_id"],
+        description: json["description"],
+        order: json["order"],
+        attachedFile: json["attached_file"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "article_id": articleId,
+        "description": description,
+        "order": order,
+        "attached_file": attachedFile,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }
 
